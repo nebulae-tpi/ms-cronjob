@@ -1,0 +1,86 @@
+"Cronjob info"
+type Cronjob {
+  "Cronjob id"
+  id: ID
+  "Cronjob name"
+  name: String
+  "Event type"
+  eventType: String
+  "Cronjob format based on https://www.npmjs.com/package/node-schedule#cron-style-scheduling"
+  cronjobFormat: String
+  "Parameters of cronjob"
+  body: String,
+  "Cronjob version"
+  version: Int,
+  "Cronjob status"
+  active: Boolean
+}
+
+type CommandResponse {
+  "Response code"
+  code: Int
+  "Response message"
+  message: String
+}
+
+input CronjobPersistInput {
+  "Cronjob name"
+  name: String!
+  "Event type"
+  eventType: String!
+  "Cronjob format based on https://www.npmjs.com/package/node-schedule#cron-style-scheduling"
+  cronjobFormat: String!
+  "Parameters of cronjob"
+  body: String
+  "Cronjob status"
+  active: Boolean
+}
+
+input CronjobUpdateInput {
+  "unique Cronjob id"
+  id: String
+  "Cronjob name"
+  name: String
+  "Event type"
+  eventType: String
+  "Cronjob format based on https://www.npmjs.com/package/node-schedule#cron-style-scheduling"
+  cronjobFormat: String
+  "Parameters of cronjob"
+  body: String
+  "Cronjob status"
+  active: Boolean
+}
+
+"Current device status"
+type Parameter {
+  "Parameter key"
+  key: String
+  "Parameter value"
+  value: String  
+}
+
+type Query {
+  "Get Cronjob filtered by the cronjob id"
+  getCronjobDetail(id: String!): Cronjob
+
+  "Get all cronjobs"
+  getCronjobs(page: Int!, count: Int!, filter: String, sortColumn: String, sortOrder: String): [Cronjob]
+
+  "Get the size of table cronjob"
+  getCronjobTableSize: Int
+}
+
+type Mutation {
+  "Create a new cronjob"
+  persistCronjob(input: CronjobPersistInput): CommandResponse
+  "update a cronjob filtered by id"
+  updateCronjob(input: CronjobUpdateInput): CommandResponse
+  "remove a cronjob filtered by id"
+  removeCronjob(cronjobId: String): CommandResponse
+  "execute a cronjob manually filtered by id"
+  executeCronjob(cronjobId: String): CommandResponse
+}
+type Subscription {
+  "Identify when a cronjob has been updated and notify listeners"
+  CronjobRegistersUpdated: Boolean
+}

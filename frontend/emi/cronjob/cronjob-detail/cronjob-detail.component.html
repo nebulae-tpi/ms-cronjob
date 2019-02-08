@@ -1,0 +1,65 @@
+<fuse-widget fxLayout="column" fxFlex="100" fxFlex.gt-xs="90" fxFlex.gt-md="90" fusePerfectScrollbar>
+  <div class="fuse-widget-front mat-white-bg mat-elevation-z2">
+    <div class="pl-16 pr-8 py-16" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="h1 font-weight-300">{{'CRONJOB.CRONJOB_DETAIL' | translate}}</div>
+
+      <button mat-icon-button aria-label="more" (click)="closeDetail()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="selectedCronjob" fusePerfectScrollbar>
+      <form name="cronjobForm" [formGroup]="cronjobForm" class="cronjob w-100-p" fxLayout="column" fxFlex>
+        <div class="content p-24">
+
+          <mat-form-field class="w-100-p">
+            <input matInput name="name" formControlName="name" [(ngModel)]="selectedCronjob.name" placeholder="{{'CRONJOB.NAME' | translate}}"
+              required>
+            <mat-error *ngIf="cronjobForm.hasError('required', 'name')">
+              {{'CRONJOB.NAME_IS' | translate}}
+              <strong>{{'CRONJOB.REQUIRED' | translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100-p">
+            <input matInput name="eventType" formControlName="eventType" [(ngModel)]="selectedCronjob.eventType" placeholder="{{'CRONJOB.EVENT_TYPE' | translate}}"
+              required>
+            <mat-error *ngIf="cronjobForm.hasError('required', 'eventType')">
+              {{'CRONJOB.EVENT_TYPE_IS' | translate}}
+              <strong>{{'CRONJOB.REQUIRED' | translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100-p">
+            <input matInput name="cronjobFormat" formControlName="cronjobFormat" [(ngModel)]="selectedCronjob.cronjobFormat" placeholder="{{'CRONJOB.CRONJOB_FORMAT' | translate}}"
+              required>
+            <mat-error *ngIf="cronjobForm.hasError('required', 'cronjobFormat')">
+              {{'CRONJOB.CRONJOB_FORMAT_IS' | translate}}
+              <strong>{{'CRONJOB.REQUIRED' | translate}}</strong>
+            </mat-error>
+            <mat-error *ngIf="cronjobForm.hasError('pattern', 'cronjobFormat')">
+              {{'CRONJOB.INVALID_CRON_FORMAT' | translate}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100-p">
+            <textarea matInput name="body" formControlName="body" [(ngModel)]="selectedCronjob.body" placeholder="{{'CRONJOB.BODY' | translate}}"
+              rows="5">
+            </textarea>
+            <mat-error *ngIf="this.cronjobForm.controls['body'].errors?.bodyFormatValidate">
+              {{'CRONJOB.BODY_INVALID' | translate}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox class="example-margin" formControlName="active" [(ngModel)]="selectedCronjob.active">{{'CRONJOB.ACTIVE' | translate}}</mat-checkbox>
+          <div class="mt-16">
+            <button mat-raised-button *ngIf="addNewCronjob" (click)="createCronjob()" [disabled]="cronjobForm.invalid || cronjobForm.pristine">{{'CRONJOB.CREATE' | translate}}</button>
+            <button mat-raised-button *ngIf="!addNewCronjob" (click)="updateCronjob()" [disabled]="cronjobForm.invalid || cronjobForm.pristine">{{'CRONJOB.SAVE' | translate}}</button>
+            <button mat-raised-button *ngIf="!addNewCronjob" (click)="removeCronjob()" color="warn">{{'CRONJOB.DELETE' | translate}}</button>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</fuse-widget>

@@ -1,0 +1,63 @@
+apiVersion: apps/v1beta2 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: cronjob
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cronjob
+  template:
+    metadata:
+      labels:
+        app: cronjob
+    spec:      
+      containers:
+      - image: nebulaetpi/cronjob.backend.cronjob:0.0.1
+        name: cronjob
+        volumeMounts:
+        - name: google-application-credentials
+          mountPath: "/etc/GOOGLE_APPLICATION_CREDENTIALS"
+          readOnly: true
+        resources:
+          requests:
+            cpu: "50m"
+        env:     
+        # EVENT STORE CONFIG 
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/GOOGLE_APPLICATION_CREDENTIALS/gcloud-service-key.json  
+        - name: EVENT_STORE_BROKER_TYPE
+          value: PUBSUB
+        - name: EVENT_STORE_BROKER_EVENTS_TOPIC
+          value: events
+        - name: EVENT_STORE_STORE_TYPE
+          value: MONGO
+        - name: EVENT_STORE_STORE_URL
+          value: mongodb://dbevents-0.dbevents:27017,dbevents-1.dbevents:27017,dbevents-2.dbevents:27017/test?replicaSet=rs0
+        - name: EVENT_STORE_STORE_AGGREGATES_DB_NAME
+          value: Aggregates
+        - name: EVENT_STORE_STORE_EVENTSTORE_DB_NAME
+          value: EventStore
+        # INTERNAL MONGO DB CONFIG
+        - name: MONGODB_URL
+          value: mongodb://cronjob-mongo:27017
+        - name: MONGODB_DB_NAME
+          value: Cronjob
+        # JWT CONGIF        
+        - name: JWT_PUBLIC_KEY
+          value: -----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyGMYfhPX7A5kAaBh9smoyDhj7Ilv0YfsPygnkEUDu44teqPzZhNjoLnAyDED3J7AhGJpOHlSzfC+7jrXXbUVczTP7vhH1pa1RXX4TIhzqo5R9NNKhREK39s6gezsP6SbCfu1XvaT1TVPEPBHho8q3qyICWFtoWTtx1tkk99jFz6zFFeIU2sTVAuf9+q1bawuHY42yU66/iaBP3zEtqLjtl7OO9z8wnIlaHW8zo20taFPeQy5xbmUaVUfEwQ6zoJCcSU2W79r2gFPWSfsXCJ07nfZIl0aWnOV7tRJLkJWsOL6EgFIh3P2v9d/SmLEVpje7kiibVUFqMg7ipRrruMzdwIDAQAB\n-----END PUBLIC KEY-----
+        # API - GATEWAY CONFIG
+        - name: GATEWAY_REPLIES_TOPIC_SUBSCRIPTION
+          value: emi-gateway-replies-topic-mbe-cronjob
+        - name: REPLY_TIMEOUT
+          value: '2000'
+        - name: BROKER_TYPE
+          value: PUBSUB
+        # RESET LOCK INITIALIZE BACKED
+        - name: LOCKVERSION
+          value: "cries in despair"
+        
+      volumes:
+      - name: google-application-credentials
+        secret:
+          secretName: google-application-credentials      

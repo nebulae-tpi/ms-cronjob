@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  broker-mqtt:
+    image: eclipse-mosquitto
+    ports:
+      - "9001:9001"
+      - "1883:1883"
+    volumes:
+      - tpi_broker_mqtt_data_cronjob:/mosquitto/data            
+  store-mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment: 
+        - storageEngine=wiredTiger
+    volumes: 
+      - tpi_store_mongo_db_cronjob:/data/db
+  keycloak-mysql:
+     image: mysql:5.6
+     ports:
+       - "3306:3306"
+     environment:
+         - MYSQL_ROOT_PASSWORD=keycloak
+         - MYSQL_DATABASE=keycloak
+         - MYSQL_USER=keycloak
+         - MYSQL_PASSWORD=keycloak
+     volumes:
+       - tpi_keycloak_mysql_data_cronjob:/var/lib/mysql
+  keycloak:
+       image: nebulaetpi/keycloak:latest
+       environment:
+         - MYSQL_ADDR=keycloak-mysql
+         - MYSQL_PORT_3306_TCP_ADDR=keycloak-mysql
+         - MYSQL_PORT_3306_TCP_PORT=3306
+         - KEYCLOAK_USER=keycloak
+         - KEYCLOAK_PASSWORD=keycloak
+         - MYSQL_DATABASE=keycloak
+         - MYSQL_USER=keycloak
+         - MYSQL_PASSWORD=keycloak
+         - SERVICE_PORTS=8080
+       ports:
+         - 8443:8443
+         - 8080:8080
+       volumes:
+         - tpi_keycloak_data_cronjob:/opt/jboss/keycloak/standalone/data      
+       depends_on: 
+         - keycloak-mysql
+volumes: 
+  tpi_store_mongo_db_cronjob:
+  tpi_broker_mqtt_data_cronjob:
+  tpi_keycloak_mysql_data_cronjob:
+  tpi_keycloak_data_cronjob:

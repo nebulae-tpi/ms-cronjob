@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{'CRONJOB.EXECUTE_CRONJOB_TITLE' | translate}}</h1>
+<mat-dialog-content>
+  <p>{{'CRONJOB.EXECUTE_CRONJOB_MESSAGE' | translate}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="accent" (click)="executeCronjob(true)">Ok</button>
+  <button mat-raised-button mat-dialog-close color="warn" (click)="executeCronjob(false)">{{'CRONJOB.CANCEL' | translate}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,8 @@
+[
+    {
+        "name": "cronjob",
+        "type": "graphql",        
+        "src": "api/emi-gateway/graphql/cronjob",
+        "preBuildCommands": []
+    }
+]
