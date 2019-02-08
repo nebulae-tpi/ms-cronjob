@@ -68,29 +68,25 @@ class GraphQlService {
       },
       {
         aggregateType: "Cronjob",
-        messageType:
-          "emigateway.graphql.query.getCronjobs",
+        messageType: "emigateway.graphql.query.getCronjobs",
         onErrorHandler,
         onCompleteHandler
       },
       {
         aggregateType: "Cronjob",
-        messageType:
-          "emigateway.graphql.query.getCronjobTableSize",
+        messageType: "emigateway.graphql.query.getCronjobTableSize",
         onErrorHandler,
         onCompleteHandler
       },
       {
         aggregateType: "Cronjob",
-        messageType:
-          "emigateway.graphql.mutation.executeCronjob",
+        messageType: "emigateway.graphql.mutation.executeCronjob",
         onErrorHandler,
         onCompleteHandler
       },
       {
         aggregateType: "Cronjob",
-        messageType:
-          "emigateway.graphql.mutation.persistCronjob",
+        messageType: "emigateway.graphql.mutation.persistCronjob",
         onErrorHandler,
         onCompleteHandler
       },

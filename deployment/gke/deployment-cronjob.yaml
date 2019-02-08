@@ -13,7 +13,7 @@ spec:
         app: cronjob
     spec:      
       containers:
-      - image: nebulaetpi/cronjob.backend.cronjob:0.0.1
+      - image: nebulaetpi/cronjob.backend.cronjob:0.0.2
         name: cronjob
         volumeMounts:
         - name: google-application-credentials
