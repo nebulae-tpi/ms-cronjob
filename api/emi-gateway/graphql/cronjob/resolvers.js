@@ -1,7 +1,8 @@
-const withFilter = require('graphql-subscriptions').withFilter;
-const PubSub = require('graphql-subscriptions').PubSub;
-const Rx = require('rxjs');
-const broker = require('../../broker/BrokerFactory')();
+const withFilter = require("graphql-subscriptions").withFilter;
+const PubSub = require("graphql-subscriptions").PubSub;
+const { of } = require("rxjs");
+const { mergeMap, catchError, map } = require("rxjs/operators");
+const broker = require("../../broker/BrokerFactory")();
 
 let pubsub = new PubSub();
 
