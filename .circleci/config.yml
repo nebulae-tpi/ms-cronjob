@@ -216,3 +216,34 @@ workflows:
             - build-frontend
             - build-api
             - build-backend
+      - hold:
+          type: approval
+      - prepare:
+          context: TPI_PROD
+          name: prepare-prod
+      - build-frontend:
+          context: TPI_PROD
+          name: build-frontend-prod
+          requires:
+            - prepare-prod
+      - build-api:
+          context: TPI_PROD
+          name: build-api-prod
+          requires:
+            - prepare-prod
+      - build-mbinit:
+          context: TPI_PROD
+          requires:
+            - prepare-prod            
+      - build-backend:
+          context: TPI_PROD
+          name: build-backend-prod
+          requires:
+            - prepare-prod
+            - build-mbinit      
+      - deploy-prod:
+          context: TPI_PROD
+          requires:
+            - build-frontend-prod
+            - build-api-prod
+            - build-backend-prdo
