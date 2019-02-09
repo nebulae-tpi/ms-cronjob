@@ -1,5 +1,5 @@
 
-version: 2
+version: 2.1
 jobs:
   prepare:
     working_directory: ~/nebulae/
@@ -188,11 +188,15 @@ jobs:
 
 
 workflows: 
-  version: 2
+  version: 2.1
   build-and-deploy:
     jobs:
       - prepare:
           context: TPI
+      - build-mbinit:
+          context: TPI
+          requires:
+            - prepare            
       - build-frontend:
           context: TPI
           requires:
@@ -201,10 +205,6 @@ workflows:
           context: TPI
           requires:
             - prepare
-      - build-mbinit:
-          context: TPI
-          requires:
-            - prepare            
       - build-backend:
           context: TPI
           requires:
@@ -218,29 +218,25 @@ workflows:
             - build-backend
       - hold:
           type: approval
-      - prepare:
-          context: TPI_PROD
-          name: prepare-prod
       - build-frontend:
           context: TPI_PROD
           name: build-frontend-prod
           requires:
-            - prepare-prod
+            - prepare
+            - hold
       - build-api:
           context: TPI_PROD
           name: build-api-prod
           requires:
-            - prepare-prod
-      - build-mbinit:
-          context: TPI_PROD
-          requires:
-            - prepare-prod            
+            - prepare
+            - hold
       - build-backend:
           context: TPI_PROD
           name: build-backend-prod
           requires:
-            - prepare-prod
+            - prepare
             - build-mbinit      
+            - hold
       - deploy-prod:
           context: TPI_PROD
           requires:
