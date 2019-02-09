@@ -3,8 +3,8 @@ const PubSub = require("graphql-subscriptions").PubSub;
 const { of } = require("rxjs");
 const { mergeMap, catchError, map } = require("rxjs/operators");
 const broker = require("../../broker/BrokerFactory")();
-
 let pubsub = new PubSub();
+
 
 function getReponseFromBackEnd$(response) {
   return of(response).pipe(

@@ -11,6 +11,8 @@ const eventSourcing = require('./tools/EventSourcing')();
 const eventStoreService = require('./services/event-store/EventStoreService')();
 const Rx = require('rxjs');
 
+
+
 const start = () => { 
     Rx.Observable.concat(
         eventSourcing.eventStore.start$(),
