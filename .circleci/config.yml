@@ -242,4 +242,4 @@ workflows:
           requires:
             - build-frontend-prod
             - build-api-prod
-            - build-backend-prdo
+            - build-backend-prod
