@@ -183,7 +183,8 @@ jobs:
         - run:
             name: Deploy BackEnds 
             command: |
-              kubectl apply -f ~/nebulae/repo/deployment/gke/              
+              test "$ENVIRONMENT" = "prod" && for xi in $(ls ~/nebulae/repo/deployment/gke/*.y*ml); do sed -i s/nebulaetpi/nebulaetpiprod/ $xi ; done
+              kubectl apply -f ~/nebulae/repo/deployment/gke/
 
 
 
