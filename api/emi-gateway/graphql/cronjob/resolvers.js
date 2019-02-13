@@ -30,7 +30,7 @@ module.exports = {
           "Cronjob",
           "emigateway.graphql.query.getCronjobDetail",
           { root, args, jwt: context.encodedToken },
-          500
+          2000
         )
         .pipe(mergeMap(response => getReponseFromBackEnd$(response)))
         .toPromise();
@@ -41,7 +41,7 @@ module.exports = {
           "Cronjob",
           "emigateway.graphql.query.getCronjobs",
           { root, args, jwt: context.encodedToken },
-          500
+          2000
         )
         .pipe(mergeMap(response => getReponseFromBackEnd$(response)))
         .toPromise();
@@ -52,7 +52,7 @@ module.exports = {
           "Cronjob",
           "emigateway.graphql.query.getCronjobTableSize",
           { root, args, jwt: context.encodedToken },
-          500
+          2000
         )
         .pipe(mergeMap(response => getReponseFromBackEnd$(response)))
         .toPromise();
@@ -65,7 +65,7 @@ module.exports = {
           "Cronjob",
           "emigateway.graphql.mutation.persistCronjob",
           { root, args, jwt: context.encodedToken },
-          500
+          2000
         )
         .pipe(mergeMap(response => getReponseFromBackEnd$(response)))
         .toPromise();
@@ -76,7 +76,7 @@ module.exports = {
           "Cronjob",
           "emigateway.graphql.mutation.updateCronjob",
           { root, args, jwt: context.encodedToken },
-          500
+          2000
         )
         .pipe(mergeMap(response => getReponseFromBackEnd$(response)))
         .toPromise();
@@ -87,7 +87,7 @@ module.exports = {
           "Cronjob",
           "emigateway.graphql.mutation.removeCronjob",
           { root, args, jwt: context.encodedToken },
-          500
+          2000
         )
         .pipe(mergeMap(response => getReponseFromBackEnd$(response)))
         .toPromise();
@@ -98,7 +98,7 @@ module.exports = {
           "Cronjob",
           "emigateway.graphql.mutation.executeCronjob",
           { root, args, jwt: context.encodedToken },
-          500
+          2000
         )
         .pipe(mergeMap(response => getReponseFromBackEnd$(response)))
         .toPromise();
