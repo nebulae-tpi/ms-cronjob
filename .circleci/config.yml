@@ -183,8 +183,7 @@ jobs:
         - run:
             name: Deploy BackEnds 
             command: |
-              test "$ENVIRONMENT" = "prod" && for xi in $(ls ~/nebulae/repo/deployment/gke/*.y*ml); do sed -i s/nebulaetpi/nebulaetpiprod/ $xi ; done
-              for xi in $(ls ~/nebulae/repo/deployment/gke/*.y*ml); do sed -i s/nebulae-tpi-229423/$GKE_PROJECT_DEV/ $xi ; done
+              for xi in $(ls ~/nebulae/repo/deployment/gke/*.y*ml); do sed -i s/DOCKERHUB/$DOCKERHUB_NAMESPACE/ $xi ; done
               kubectl apply -f ~/nebulae/repo/deployment/gke/
 
 
@@ -203,45 +202,72 @@ workflows:
           context: TPI
           requires:
             - prepare
+          filters:
+            branches:
+              only:
+                - develop
       - build-api:
           context: TPI
           requires:
             - prepare
+          filters:
+            branches:
+              only:
+                - develop
       - build-backend:
           context: TPI
           requires:
             - prepare
             - build-mbinit      
+          filters:
+            branches:
+              only:
+                - develop
       - deploy-prod:
           context: TPI
           requires:
             - build-frontend
             - build-api
             - build-backend
-      - hold:
-          type: approval
+          filters:
+            branches:
+              only:
+                - develop
       - build-frontend:
           context: TPI_PROD
           name: build-frontend-prod
           requires:
             - prepare
-            - hold
+          filters:
+            branches:
+              only:
+                - master
       - build-api:
           context: TPI_PROD
           name: build-api-prod
           requires:
             - prepare
-            - hold
+          filters:
+            branches:
+              only:
+                - master
       - build-backend:
           context: TPI_PROD
           name: build-backend-prod
           requires:
             - prepare
             - build-mbinit      
-            - hold
+          filters:
+            branches:
+              only:
+                - master
       - deploy-prod:
           context: TPI_PROD
           requires:
             - build-frontend-prod
             - build-api-prod
             - build-backend-prod
+          filters:
+            branches:
+              only:
+                - master
