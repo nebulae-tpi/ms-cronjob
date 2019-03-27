@@ -263,6 +263,7 @@ workflows:
                 - master
       - deploy-prod:
           context: TPI_PROD
+          name: deploy-prod-prod
           requires:
             - build-frontend-prod
             - build-api-prod
