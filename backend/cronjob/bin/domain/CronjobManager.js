@@ -38,7 +38,7 @@ class CronjobManager {
     return Rx.Observable.of(cronjob)
       .map(jobValue => {
         if (jobValue.active) {
-          return schedule.scheduleJob(jobValue.cronjobFormat, function() {
+          return schedule.scheduleJob(jobValue.cronjobFormat, function () {
             const body = jobValue.body ? JSON.parse(jobValue.body) : undefined;
             eventSourcing.eventStore
               .emitEvent$(
@@ -50,10 +50,11 @@ class CronjobManager {
                   data: body,
                   //TODO: aca se debe colocar el usuario que periste el evento, si es el sistema el que ejecuta el cronjob 
                   // se debe colocar como SYSTEM.Cronjob.cronjob
-                  user: 'SYSTEM.Cronjob.cronjob'
+                  user: 'SYSTEM.Cronjob.cronjob',
+                  ephemeral: true
                 })
               )
-              .subscribe(result => {});
+              .subscribe(result => { });
           });
         }
       })
@@ -81,7 +82,8 @@ class CronjobManager {
             data: body,
             //TODO: aca se debe colocar el usuario que periste el evento, si el sistema de debe colocar como
             // SYSTEM.Cronjob.cronjob
-            user: 'SYSTEM.Cronjob.cronjob'
+            user: 'SYSTEM.Cronjob.cronjob',
+            ephemeral: true
           })
         );
       })
@@ -119,7 +121,8 @@ class CronjobManager {
             aggregateId: job.cronjob.id,
             data: job.cronjob.id,
             //TODO: aca se debe colocar el usuario que elimina el cronjob
-            user: 'SYSTEM.Cronjob.cronjob'
+            user: 'SYSTEM.Cronjob.cronjob',
+            ephemeral: true
           })
         );
       })
@@ -134,8 +137,8 @@ class CronjobManager {
   updateCronjob$(cronjob) {
     if (cronjob.body && !this.validateCronjobBody(cronjob.body)) {
       return Rx.Observable.throw(
-          new CustomError("CronjobManager", "updateCronjob$()", "14010",  {body: "Invalid body format"})
-        );
+        new CustomError("CronjobManager", "updateCronjob$()", "14010", { body: "Invalid body format" })
+      );
     }
     if (
       cronjob.cronjobFormat &&
@@ -143,7 +146,7 @@ class CronjobManager {
         !this.validateCronjobFormat(cronjob.cronjobFormat))
     ) {
       return Rx.Observable.throw(
-        new CustomError("CronjobManager", "updateCronjob$()", "14011",  {body: "Invalid cronjob format"})
+        new CustomError("CronjobManager", "updateCronjob$()", "14011", { body: "Invalid cronjob format" })
       );
     } else {
       const oldJobVsScheduleJob = this.jobVsScheduleJobList.filter(
@@ -162,7 +165,7 @@ class CronjobManager {
             }
             var index = this.jobVsScheduleJobList.indexOf(oldJobVsScheduleJob);
             if (index > -1) {
-              this.jobVsScheduleJobList.splice(index,1);
+              this.jobVsScheduleJobList.splice(index, 1);
             }
             return this.buildJobVsScheduleJobElement$(job);
           });
@@ -177,7 +180,8 @@ class CronjobManager {
               aggregateId: newJobVsScheduleJob.cronjob.id,
               data: newJobVsScheduleJob.cronjob,
               //TODO: aca se debe colocar el usuario que periste el cronjob
-              user: 'SYSTEM.Cronjob.cronjob'
+              user: 'SYSTEM.Cronjob.cronjob',
+              ephemeral: true
             })
           );
         })
@@ -193,7 +197,7 @@ class CronjobManager {
   createCronjob$(cronjob) {
     if (cronjob.body && !this.validateCronjobBody(cronjob.body)) {
       return Rx.Observable.throw(
-        new CustomError("CronjobManager", "updateCronjob$()", "14010",  {body: "Invalid body format"})
+        new CustomError("CronjobManager", "updateCronjob$()", "14010", { body: "Invalid body format" })
       );
     }
     if (
@@ -201,7 +205,7 @@ class CronjobManager {
       !this.validateCronjobFormat(cronjob.cronjobFormat)
     ) {
       return Rx.Observable.throw(
-        new CustomError("CronjobManager", "updateCronjob$()", "14011",  {body: "Invalid cronjob format"})
+        new CustomError("CronjobManager", "updateCronjob$()", "14011", { body: "Invalid cronjob format" })
       );
     }
     {
@@ -221,7 +225,8 @@ class CronjobManager {
               aggregateId: jobVsScheduleJobElement.cronjob.id,
               data: jobVsScheduleJobElement.cronjob,
               //TODO: aca se debe colocar el usuario que periste el cronjob
-              user: 'SYSTEM.Cronjob.cronjob'
+              user: 'SYSTEM.Cronjob.cronjob',
+              ephemeral: true
             })
           );
         })
