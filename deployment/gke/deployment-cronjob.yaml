@@ -13,7 +13,7 @@ spec:
         app: cronjob
     spec:      
       containers:
-      - image: DOCKERHUB/cronjob.backend.cronjob:1.0.1
+      - image: DOCKERHUB/cronjob.backend.cronjob:1.0.2
         name: cronjob
         volumeMounts:
         - name: google-application-credentials

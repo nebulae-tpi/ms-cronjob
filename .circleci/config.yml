@@ -142,7 +142,7 @@ jobs:
             mkdir ~/nebulae/backend
             cp ~/nebulae/go/mbinit ~/nebulae/repo/backend/cronjob/
             export DOCKERHUB_IMAGE=cronjob.backend.cronjob
-            export DOCKERHUB_TAG=1.0.1
+            export DOCKERHUB_TAG=1.0.2
             gitChanged backend/cronjob || docker build -m "300M" -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_IMAGE:$DOCKERHUB_TAG -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_IMAGE:latest ~/nebulae/repo/backend/cronjob/
             gitChanged backend/cronjob || docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
             gitChanged backend/cronjob || docker push $DOCKERHUB_NAMESPACE/$DOCKERHUB_IMAGE:$DOCKERHUB_TAG
