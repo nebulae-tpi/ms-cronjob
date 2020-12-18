@@ -61,16 +61,16 @@
 
             <!-- Format Column -->
             <ng-container cdkColumnDef="cronjobFormat">
-              <mat-header-cell *cdkHeaderCellDef>{{'CRONJOB.CRONJOB_FORMAT' | translate}}</mat-header-cell>
-              <mat-cell *cdkCellDef="let cronjob">
+              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{'CRONJOB.CRONJOB_FORMAT' | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let cronjob" fxHide fxShow.gt-xs>
                 <p class="text-truncate">{{cronjob.cronjobFormat}}</p>
               </mat-cell>
             </ng-container>
 
             <!-- Version Column -->
             <ng-container cdkColumnDef="version">
-              <mat-header-cell *cdkHeaderCellDef>{{'CRONJOB.VERSION' | translate}}</mat-header-cell>
-              <mat-cell *cdkCellDef="let cronjob">
+              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{'CRONJOB.VERSION' | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let cronjob" fxHide fxShow.gt-xs>
                 <p class="text-truncate">{{cronjob.version}}</p>
               </mat-cell>
             </ng-container>
@@ -79,8 +79,8 @@
 
             <!-- Active Column -->
             <ng-container cdkColumnDef="active">
-              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{'CRONJOB.ACTIVE' | translate}}</mat-header-cell>
-              <mat-cell *cdkCellDef="let cronjob" fxHide fxShow.gt-xs>
+              <mat-header-cell *cdkHeaderCellDef>{{'CRONJOB.ACTIVE' | translate}}</mat-header-cell>
+              <mat-cell *cdkCellDef="let cronjob">
                 <span class="quantity-indicator text-truncate" [ngClass]="{'mat-primary-200-bg': !cronjob.active, 'mat-green-600-bg': cronjob.active}">
                 </span>
               </mat-cell>
@@ -88,8 +88,8 @@
 
             <!-- Execute Column -->
             <ng-container cdkColumnDef="execute">
-              <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs></mat-header-cell>
-              <mat-cell *cdkCellDef="let cronjob" fxHide fxShow.gt-xs>
+              <mat-header-cell *cdkHeaderCellDef ></mat-header-cell>
+              <mat-cell *cdkCellDef="let cronjob">
                 <button mat-icon-button (click)="executeCronjob(cronjob.id)">
                   <mat-icon style="color: #4caf50" aria-label="Execute cronjob">send</mat-icon>
                 </button>
