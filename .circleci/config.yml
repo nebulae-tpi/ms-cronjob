@@ -20,7 +20,7 @@ jobs:
   build-frontend:
     working_directory: ~/nebulae/
     docker:
-      - image: circleci/node:9.9.0
+      - image: circleci/node:10.13.0
         command: bash
     steps:
       - attach_workspace:
@@ -62,7 +62,7 @@ jobs:
   build-api:    
     working_directory: ~/nebulae/
     docker:
-      - image: circleci/node:9.9.0
+      - image: circleci/node:10.12
         command: bash
     steps:
       - attach_workspace:
