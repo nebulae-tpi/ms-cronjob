@@ -12,7 +12,10 @@
     background: white;
     z-index: 9999
   }
-
+  
+  .table-business-units.content-card{
+    overflow: auto !important;
+  }
 
   .header {
     .search-input-wrappers {
